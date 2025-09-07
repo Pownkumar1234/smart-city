@@ -1,0 +1,65 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+h1 { color: #2c3e50; }
+
+.login-box {
+  width: 300px;
+  margin: 50px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.login-box input, textarea, select {
+  width: 90%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+button {
+  padding: 10px 15px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { background: #2980b9; }
+
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+table th { background: #3498db; color: white; }
+
+img { width: 60px; border-radius: 6px; }
+
+footer {
+  margin-top: 20px;
+  padding: 10px;
+  background: #2c3e50;
+  color: white;
+}
+
+.animated-text {
+  animation: slide 5s infinite alternate;
+  color: #e74c3c;
+}
+@keyframes slide {
+  from { letter-spacing: 2px; }
+  to { letter-spacing: 10px; }
+}
