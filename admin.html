@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>⚙️ Admin Dashboard</h1>
+  <button onclick="logout()">Logout</button>
+
+  <div style="margin: 10px;">
+    <input type="text" id="searchBox" placeholder="🔍 Search complaints..." onkeyup="applyFilters()">
+    <select id="statusFilter" onchange="applyFilters()">
+      <option value="All">All</option>
+      <option value="Pending">Pending</option>
+      <option value="Resolved">Resolved</option>
+    </select>
+    <button onclick="exportToExcel()">⬇ Export Excel</button>
+    <button onclick="exportToPDF()">⬇ Export PDF</button>
+  </div>
+
+  <table id="complaintsTable">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Submitted At</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <footer>CREATED BY: POWNKUMAR.A, MOHANAPRASATH.K, GIRIDHARAN.R</footer>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
