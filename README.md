@@ -35,9 +35,13 @@ This system aims to enhance **city efficiency**, **citizen engagement**, and **s
 
 /project
 ├── index.html # Login & Signup Page
+
 ├── style.css # Stylesheet
+
 ├── app.js # Login Logic
+
 ├── firebase-config.js # Firebase Setup
+
 └── README.md # Project Documentation
 
 🌟 Future Enhancements
