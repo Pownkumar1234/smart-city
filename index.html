@@ -3,27 +3,193 @@
 <head>
   <meta charset="UTF-8">
   <title>Smart City Complaint Portal</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
-  <script src="firebase-config.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(270deg, #4facfe, #00f2fe, #43e97b, #38f9d7);
+      background-size: 800% 800%;
+      animation: gradientBG 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      color: white;
+      flex-direction: column;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating circles */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      animation: float 20s linear infinite;
+    }
+
+    .circle:nth-child(1) { width: 100px; height: 100px; left: 10%; animation-duration: 25s; }
+    .circle:nth-child(2) { width: 60px; height: 60px; left: 70%; animation-duration: 30s; }
+    .circle:nth-child(3) { width: 150px; height: 150px; left: 40%; animation-duration: 40s; }
+    .circle:nth-child(4) { width: 90px; height: 90px; left: 80%; animation-duration: 35s; }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(1); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+    }
+
+    .container {
+      text-align: center;
+      z-index: 1;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .typing {
+      font-size: 28px;
+      font-weight: bold;
+      border-right: 3px solid white;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(40, end) forwards, blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    .login-box {
+      margin-top: 30px;
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      display: none;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    input, textarea {
+      width: 250px;
+      padding: 10px;
+      margin: 8px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    textarea {
+      height: 100px;
+      resize: none;
+    }
+
+    button {
+      background: #00f2fe;
+      border: none;
+      padding: 10px 20px;
+      color: black;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: #4facfe;
+    }
+
+    #complaint-section {
+      display: none;
+    }
+
+    /* Loader spinner */
+    .loader {
+      border: 5px solid rgba(255,255,255,0.3);
+      border-top: 5px solid #fff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Footer credits */
+    footer {
+      background: rgba(0,0,0,0.4);
+      padding: 10px 20px;
+      border-radius: 10px 10px 0 0;
+      font-size: 14px;
+      text-align: center;
+      color: #fff;
+      z-index: 1;
+      animation: fadeIn 2s ease forwards;
+    }
+  </style>
 </head>
 <body>
-  <div class="intro">
-    <h1 class="animated-text">SMART & SUSTAINABLE CITY COMPLAINT PORTAL</h1>
+  <!-- Floating circles -->
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+
+  <div class="container">
+    <div id="welcome" class="typing">Welcome to Smart City Complaint Portal</div>
+
+    <div class="login-box" id="login-section">
+      <h2>Login / Signup</h2>
+      <input type="email" id="email" placeholder="Email"><br>
+      <input type="password" id="password" placeholder="Password"><br>
+      <button onclick="login()">Login</button>
+      <button onclick="signup()">Signup</button>
+      <div class="loader" id="loader"></div>
+    </div>
+
+    <div id="complaint-section">
+      <h2>Submit Complaint</h2>
+      <textarea id="complaintText" placeholder="Enter complaint"></textarea><br>
+      <input type="file" id="complaintImage"><br>
+      <button onclick="submitComplaint()">Submit</button>
+    </div>
   </div>
 
-  <div class="login-box">
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <p>New User? <a href="#" onclick="signup()">Signup</a></p>
-  </div>
+  <!-- Footer credits -->
+  <footer>
+    Created by: <b>POWNKUMAR.A</b>, <b>MOHANAPRASATH.K</b>, <b>GIRIDHARAN.R</b>
+  </footer>
 
-  <footer>CREATED BY: POWNKUMAR.A, MOHANAPRASATH.K, GIRIDHARAN.R</footer>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+  <script src="firebase-config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
