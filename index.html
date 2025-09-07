@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart City Complaint Portal</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+  <div class="intro">
+    <h1 class="animated-text">SMART & SUSTAINABLE CITY COMPLAINT PORTAL</h1>
+  </div>
+
+  <div class="login-box">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p>New User? <a href="#" onclick="signup()">Signup</a></p>
+  </div>
+
+  <footer>CREATED BY: POWNKUMAR.A, MOHANAPRASATH.K, GIRIDHARAN.R</footer>
+  <script src="app.js"></script>
+</body>
+</html>
